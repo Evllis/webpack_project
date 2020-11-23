@@ -1,17 +1,15 @@
-// build/webpack.config.js
+// build/webpack.base.config.js
 const path = require('path')
 
-const HtmlWebpackPlugin = require("html-webpack-plugin")
-
 module.exports = {
-    // 指定构建环境
-    mode: 'development',
+    // 入口
     entry: {
         main: './src/index.js'
     },
     output: {
         filename: 'index.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, '../dist'),
+        publicPath: '/' // 打包后的资源的访问路径前缀
     },
     module: {
         rules: [
@@ -31,17 +29,5 @@ module.exports = {
                 use:['style-loader', 'css-loader', 'less-loader']
             }
         ]
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            title: '极限编程网',
-            filename: 'index.html',
-            inject: "body",
-            template: "./src/index.html",
-            hash: true,
-            meta: {
-              'set-cookie': { 'http-equiv': 'set-cookie', content: 'name=value; expires=date; path=url' },
-            }
-        })
-    ]
+    }
 }
