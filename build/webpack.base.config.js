@@ -8,10 +8,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 module.exports = {
     // 入口
     entry: {
-        main: './src/index.js'
+        main: './src/index.js',
+        main1: './src/index2.js'
     },
     output: {
-        filename: 'js/index.[hash:8].js',
+        filename: 'js/[name].[hash:8].js',
         path: path.resolve(__dirname, '../dist'),
         publicPath: '/' // 打包后的资源的访问路径前缀
     },
