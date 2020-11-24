@@ -11,6 +11,8 @@ const TerserWebpackPlugin = require('terser-webpack-plugin')
 const { merge } = require('webpack-merge')
 // 压缩css
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+// 自动清空dist文件夹
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = merge(webpackBaseConfig, {
     // 指定构建环境
@@ -28,11 +30,15 @@ module.exports = merge(webpackBaseConfig, {
                 collapseWhitespace: true, // 去空格
                 removeAttributeQuotes: true, // 去属性的引号
             }
-        })
+        }),
+        new CleanWebpackPlugin()
     ],
     optimization: {
         minimizer: [
             new TerserWebpackPlugin({
+                parallel: true, // 启用多进程并行运行
+                exclude: /\/node_modules/, // 排除文件夹
+                extractComments: true, // 这个选项如果为true 会生成一个app.js.LICENSE.txt文件 存储特定格式的注释
                 terserOptions: {
                     mangle: true, // 混淆，默认也是开的，mangle也是可以配置很多选项的，具体看后面的链接
                     compress: {

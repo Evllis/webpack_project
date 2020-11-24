@@ -11,7 +11,7 @@ module.exports = {
         main: './src/index.js'
     },
     output: {
-        filename: 'index.js',
+        filename: 'js/index.[hash:8].js',
         path: path.resolve(__dirname, '../dist'),
         publicPath: '/' // 打包后的资源的访问路径前缀
     },
@@ -66,7 +66,7 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'css/[name].[hash:6].css',
+            filename: 'css/[name].[hash:8].css',
             chunkFilename: 'css/[id].css'
         })
     ]
