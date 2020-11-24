@@ -13,6 +13,8 @@ const { merge } = require('webpack-merge')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 // 自动清空dist文件夹
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+// 构建包分析
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = merge(webpackBaseConfig, {
     // 指定构建环境
@@ -31,7 +33,8 @@ module.exports = merge(webpackBaseConfig, {
                 removeAttributeQuotes: true, // 去属性的引号
             }
         }),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new BundleAnalyzerPlugin()
     ],
     optimization: {
         minimizer: [
