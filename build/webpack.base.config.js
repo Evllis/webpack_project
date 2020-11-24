@@ -1,6 +1,10 @@
 // build/webpack.base.config.js
 const path = require('path')
 
+const devMode = process.env.NODE_ENV === 'development' // 是否是开发模式
+
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+
 module.exports = {
     // 入口
     entry: {
@@ -19,15 +23,51 @@ module.exports = {
                 loader: 'babel-loader'
             },
             {
-                test:/\.css$/,
+                test:/\.css$/i,
                 exclude: /node_modules/,
-                use:['style-loader', 'css-loader']
+                use:[
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: '../', // 修改公共路徑
+                        }
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true,
+                        }
+                    },
+                ]
             },
             {
                 test:/\.less$/,
                 exclude: /node_modules/,
-                use:['style-loader', 'css-loader', 'less-loader']
+                use:[
+                    {
+                        loader: MiniCssExtractPlugin.loader
+                    },
+                    'css-loader',
+                    'less-loader'
+                ]
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: 'img/[name].[ext]'
+                        }
+                    }
+                ]
             }
         ]
-    }
+    },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].[hash:6].css',
+            chunkFilename: 'css/[id].css'
+        })
+    ]
 }
