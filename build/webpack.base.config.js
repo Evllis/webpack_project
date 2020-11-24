@@ -1,7 +1,7 @@
 // build/webpack.base.config.js
 const path = require('path')
 
-const devMode = process.env.NODE_ENV === 'development' // 是否是开发模式
+const devMode = process.env.NODE_ENV === 'development' // 是否开发模式
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
