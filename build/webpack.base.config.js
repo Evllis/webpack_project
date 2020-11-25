@@ -3,16 +3,19 @@ const path = require('path')
 
 const devMode = process.env.NODE_ENV === 'development' // 是否开发模式
 
+const setMPA = require('./util')
+
+const { entry, htmlWebpackPlugins } = setMPA()
+
+// css压缩
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
     // 入口
-    entry: {
-        main: './src/index.js',
-        main1: './src/index2.js'
-    },
+    entry,
     output: {
-        filename: 'js/[name].[hash:8].js',
+        filename: '[name]/js/index.[hash:8].js',
+        chunkFilename: '[name]/js/index.[chunkhash:8].js',
         path: path.resolve(__dirname, '../dist'),
         publicPath: '/' // 打包后的资源的访问路径前缀
     },
@@ -67,8 +70,8 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'css/[name].[hash:8].css',
-            chunkFilename: 'css/[id].css'
+            filename: '[name]/css/[name].[contenthash:8].css',
+            chunkFilename: '[name]/css/[id].css'
         })
-    ]
+    ].concat(htmlWebpackPlugins)
 }
