@@ -14,7 +14,7 @@ module.exports = {
     // 入口
     entry,
     output: {
-        filename: '[name]/js/index.[hash:8].js',
+        filename: '[name]/js/index.[contenthash:8].js',
         chunkFilename: '[name]/js/index.[chunkhash:8].js',
         path: path.resolve(__dirname, '../dist'),
         publicPath: '/' // 打包后的资源的访问路径前缀
