@@ -15,6 +15,8 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 // 构建包分析
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// 静态资源不需要webpack处理
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = merge(webpackBaseConfig, {
     // 指定构建环境
@@ -34,7 +36,15 @@ module.exports = merge(webpackBaseConfig, {
             }
         }),
         new CleanWebpackPlugin(),
-        new BundleAnalyzerPlugin()
+        new BundleAnalyzerPlugin(),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: path.resolve(__dirname, '../src/assets/img'),
+                    to: path.resolve(__dirname, '../dist/img')
+                }
+            ]
+        })
     ],
     optimization: {
         splitChunks: {
