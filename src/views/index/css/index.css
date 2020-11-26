@@ -1,5 +1,6 @@
 body {
   color: red;
+  filter: blur(5px);
   height: 200px;
   background-image: url('../../../common/img/2020-11-26_11-10-53.png');
 }

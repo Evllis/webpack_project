@@ -10,6 +10,8 @@ const { entry, htmlWebpackPlugins } = setMPA()
 
 // css压缩
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+// 自动添加前缀
+const autoprefixer = require('autoprefixer')
 
 function resolve (dir) {
     return path.join(__dirname, '..', dir)
@@ -59,13 +61,16 @@ module.exports = {
                         loader: MiniCssExtractPlugin.loader,
                         options: {
                             publicPath: '../', // 修改公共路徑
-                        }
+                        },
                     },
                     {
                         loader: 'css-loader',
                         options: {
                             sourceMap: true,
-                        }
+                        },
+                    },
+                    {
+                        loader: 'postcss-loader',
                     },
                 ]
             },
@@ -76,8 +81,15 @@ module.exports = {
                     {
                         loader: MiniCssExtractPlugin.loader
                     },
-                    'css-loader',
-                    'less-loader'
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'postcss-loader'
+                    },
+                    {
+                        loader: 'less-loader'
+                    },
                 ]
             },
             {
