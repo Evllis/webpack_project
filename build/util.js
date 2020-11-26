@@ -20,7 +20,7 @@ const setMPA = () => {
             new HtmlWebpackPlugin({
                 template: path.join(__dirname, `../src/views/${pageName}/index.html`),
                 filename: `${pageName + (pageName !== 'index' ? '/index' : '')}.html`,
-                chunks: [pageName],
+                chunks: [pageName, 'vendors', 'commons'],
                 inject: true, // 注入选项 有四个值 true,body(script标签位于body底部),head,false(不插入js文件)
                 hash: true, // 回给script标签中的js文件增加一个随机数 防止缓存 bundle.js?22b9692e22e7be37b57e
                 // 压缩选项 会有很多选项 可以去npm官网上查看对应的配置
