@@ -24,14 +24,14 @@ module.exports = merge(webpackBaseConfig, {
     plugins:[
         new CleanWebpackPlugin(),
         new BundleAnalyzerPlugin(),
-        new CopyWebpackPlugin({
-            patterns: [
-                {
-                    from: path.resolve(__dirname, '../src/assets/img'),
-                    to: path.resolve(__dirname, '../dist/img')
-                }
-            ]
-        })
+        // new CopyWebpackPlugin({
+        //     patterns: [
+        //         {
+        //             from: path.resolve(__dirname, '../src/assets/img'),
+        //             to: path.resolve(__dirname, '../dist/img')
+        //         }
+        //     ]
+        // })
     ],
     optimization: {
         splitChunks: {
