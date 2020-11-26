@@ -11,6 +11,10 @@ const { entry, htmlWebpackPlugins } = setMPA()
 // css压缩
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
+function resolve (dir) {
+    return path.join(__dirname, '..', dir)
+}
+
 module.exports = {
     // 入口
     entry,
@@ -20,12 +24,32 @@ module.exports = {
         path: path.resolve(__dirname, '../dist'),
         publicPath: '/' // 打包后的资源的访问路径前缀
     },
+    resolve: {
+        // 文件扩展名，写明以后就不需要每个文件写后缀
+        // extensions: ['.js', '.css', '.json'],
+        // 路径别名，比如这里可以使用 css 指向 static/css 路径
+        alias: {
+            '@': resolve('src'),
+        }
+    },
     module: {
         rules: [
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/, // 这个node_modules文件夹里面的js/jsx文件不需要使用babel-loader
-                loader: 'babel-loader'
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            // ES6、ES7语法解析
+                            presets: ['@babel/preset-env', '@babel/react'],
+                            plugins: [
+                                // 支持装饰器
+                                ['@babel/plugin-proposal-decorators', { 'legacy': true }]
+                            ]
+                        }
+                    }
+                ],
             },
             {
                 test:/\.css$/i,
@@ -63,8 +87,8 @@ module.exports = {
                         loader: 'file-loader',
                         options: {
                             name: '[name].[ext]',
-                            publicPath:'./common/font/',
-                            outputPath:'common/font/',
+                            publicPath: './common/font/',
+                            outputPath: 'common/font/',
                         },
                     },
                 ],
